@@ -21,12 +21,12 @@ Por fim, se você quiser convidar os times, suas credenciais devem ter permissã
 
 ### Exemplo de Utilização
 	
-	#Convidar os 15 melhores times de uma liga para uma outra liga
+    #Convidar os 15 melhores times de uma liga (liga_exemplo) para uma outra liga (nova_liga_exemplo)
     api = APICartola()
     infoliga = api.informacoes_liga('liga_exemplo')
     json_times_ordenados = sorted(infoliga['times'], key=lambda  k: k['ranking']['campeonato'])
     times_a_convidar = [x['slug'] for x in json_times_ordenados[:15]]
-    api.convidar_times(times_a_convidar)
+    api.convidar_times(times_a_convidar, 'nova_liga_exemplo')
 
 ### Notas Adicionais e Agradecimentos
 
