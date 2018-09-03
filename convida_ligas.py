@@ -9,11 +9,16 @@ class APICartola:
     
     #O arquivo credenciais deve estar na mesma pasta desse scripts, e deve conter o login na primeira linha, e a senha na segunda.
     def __init__(self):
-        with open("credenciais","r") as f:
-            credenciais = f.read().splitlines() 
-        response = requests.post(AUTH_URL,json=dict(payload=dict(email=credenciais[0],password=credenciais[1],serviceId=438)))
-        body = response.json()
-        self.headers = {'X-GLB-Token': body['glbId']} 
+        try:
+            with open("credenciais","r") as f:
+                credenciais = f.read().splitlines() 
+            response = requests.post(AUTH_URL,json=dict(payload=dict(email=credenciais[0],password=credenciais[1],serviceId=438)))
+            body = response.json()
+            self.headers = {'X-GLB-Token': body['glbId']} 
+        except FileNotFoundError:
+            print("Arquivo de Credenciais não encontrado.")
+        except KeyError:
+            print("Credenciais inválidas. Verifique o arquivo de credenciais.")
 
     #Retorna informações da liga nome_liga. Útil para pegar informações dos times e customizar o critério de convite.
     def informacoes_liga(self,nome_liga):
